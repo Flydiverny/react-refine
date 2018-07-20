@@ -6,11 +6,11 @@ import identityGen from "./identityGen";
 const filterController = WrappedComponent => {
   const uuid = identityGen("filter");
 
-  const FilterController = ({ forwardedRef, ...props }) => (
+  const FilterController = props => (
     <RefineContext.Consumer>
       {({ addFilter, removeFilter }) => (
         <WrappedComponent
-          ref={forwardedRef}
+          {...props}
           setFilter={filter => addFilter(uuid, filter)}
           unsetFilter={() => removeFilter(uuid)}
         />

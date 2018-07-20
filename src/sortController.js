@@ -1,17 +1,16 @@
 import React from "react";
 import hoistNonReactStatics from "hoist-non-react-statics";
 import RefineContext from "./RefineContext";
-import { OFF } from "./RefineScope";
 import identityGen from "./identityGen";
 
 const sortController = comparator => WrappedComponent => {
   const identifier = identityGen("sort");
-  // eslint-disable-next-line react/prop-types
-  const SortController = ({ forwardedRef, ...props }) => (
+
+  const SortController = props => (
     <RefineContext.Consumer>
       {({ removeSorter, getSorterDirection, toggleSorter }) => (
         <WrappedComponent
-          ref={forwardedRef}
+          {...props}
           setSortDirection={direction =>
             toggleSorter(identifier, comparator, direction)
           }
