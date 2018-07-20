@@ -14,8 +14,8 @@ const sortController = comparator => WrappedComponent => {
           setSortDirection={direction =>
             toggleSorter(identifier, comparator, direction)
           }
-          unsetSorter={() => removeSorter(identifier)}
-          toggleSortDirection={() => toggleSorter(identifier, comparator)}
+          removeSorter={() => removeSorter(identifier)}
+          toggleSorter={() => toggleSorter(identifier, comparator)}
           sortMode={getSorterDirection(identifier)}
         />
       )}

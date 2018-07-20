@@ -12,7 +12,7 @@ const filterController = WrappedComponent => {
         <WrappedComponent
           {...props}
           setFilter={filter => addFilter(uuid, filter)}
-          unsetFilter={() => removeFilter(uuid)}
+          clearFilter={() => removeFilter(uuid)}
         />
       )}
     </RefineContext.Consumer>

@@ -21,26 +21,26 @@ const freeTextFilter = filter => items =>
 const lengthFilter = filter => items =>
   items.filter(item => item.length <= filter);
 
-const onChange = (filter, setFilter, unsetFilter) => evt => {
+const onChange = (filter, setFilter, clearFilter) => evt => {
   if (evt.target.value.length === 0) {
-    unsetFilter();
+    clearFilter();
   } else {
     setFilter(filter(evt.target.value));
   }
 };
 
-const FreeTextFilter = ({ setFilter, unsetFilter }) => (
-  <input onChange={onChange(freeTextFilter, setFilter, unsetFilter)} />
+const FreeTextFilter = ({ setFilter, clearFilter }) => (
+  <input onChange={onChange(freeTextFilter, setFilter, clearFilter)} />
 );
-const LengthFilter = ({ setFilter, unsetFilter }) => (
-  <input onChange={onChange(lengthFilter, setFilter, unsetFilter)} />
+const LengthFilter = ({ setFilter, clearFilter }) => (
+  <input onChange={onChange(lengthFilter, setFilter, clearFilter)} />
 );
 
-const Sorter = ({ toggleSortDirection, unsetSorter, sortMode }) => (
+const Sorter = ({ toggleSorter, removeSorter, sortMode }) => (
   <Fragment>
     {sortMode}
-    <button onClick={toggleSortDirection}>Toggle</button>
-    <button onClick={unsetSorter}>Off</button>
+    <button onClick={toggleSorter}>Toggle</button>
+    <button onClick={removeSorter}>Off</button>
   </Fragment>
 );
 
