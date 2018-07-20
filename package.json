@@ -22,11 +22,12 @@
     "hoist-non-react-statics": "^3.0.0-rc.1"
   },
   "peerDependencies": {
-    "react": "16.x",
-    "prop-types": "15.x"
+    "prop-types": "15.x",
+    "react": "16.x"
   },
   "devDependencies": {
     "nwb": "0.21.x",
+    "prettier": "^1.13.7",
     "prop-types": "^15.6.2",
     "react": "^16.4.1",
     "react-dom": "^16.4.1"
