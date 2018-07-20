@@ -1,9 +1,18 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
 import ReactDOM from "react-dom";
 
-import { FilterScope, FilterResult, filterController } from "../../src";
+import {
+  RefineScope,
+  Refine,
+  Sort,
+  Filter,
+  filterController,
+  sortController,
+  SORT_MODE_ONE,
+  SORT_MODE_TIE
+} from "../../src";
 
-const items = ["Hello World", "123", "Hello World 123", "5767"];
+const items = ["Hello World", "12345", "Hello W0r1d", "66666", "55555"];
 
 const freeTextFilter = filter => items =>
   items.filter(item => item.includes(filter));
@@ -11,67 +20,89 @@ const freeTextFilter = filter => items =>
 const lengthFilter = filter => items =>
   items.filter(item => item.length <= filter);
 
-class FreeTextFilter extends Component {
-  onChange = evt => {
-    if (evt.target.value.length === 0) {
-      this.props.unsetFilter();
-    } else {
-      this.props.setFilter(freeTextFilter(evt.target.value));
-    }
-  };
-
-  render() {
-    return <input onChange={this.onChange} />;
+const onChange = filter => evt => {
+  if (evt.target.value.length === 0) {
+    this.props.unsetFilter();
+  } else {
+    this.props.setFilter(filter(evt.target.value));
   }
-}
+};
 
-class LengthFilter extends Component {
-  onChange = evt => {
-    if (evt.target.value.length === 0) {
-      this.props.unsetFilter();
-    } else {
-      this.props.setFilter(lengthFilter(evt.target.value));
-    }
-  };
+const FreeTextFilter = () => <input onChange={onChange(freeTextFilter)} />;
+const LengthFilter = () => <input onChange={onChange(lengthFilter)} />;
 
-  render() {
-    return <input onChange={this.onChange} />;
-  }
-}
+const Sorter = ({ toggleSortDirection, unsetSorter, sortMode }) => (
+  <Fragment>
+    {sortMode}
+    <button onClick={toggleSortDirection}>Toggle</button>
+    <button onClick={unsetSorter}>Off</button>
+  </Fragment>
+);
 
 const EnhancedFreeTextFilter = filterController(FreeTextFilter);
 const EnhancedLengthFilter = filterController(LengthFilter);
+const LengthSorter = sortController((a, b) => a.length - b.length)(Sorter);
+const AlphabeticSorter = sortController((a, b) => (a < b ? -1 : a > b ? 1 : 0))(
+  Sorter
+);
+
+const Facet = ({ component: Component, ...props }) => (
+  <table>
+    <thead>
+      <tr>
+        <th>
+          Alpha:
+          <AlphabeticSorter />
+        </th>
+        <th>
+          Length:
+          <LengthSorter />
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <Component {...props}>
+        {items =>
+          items.map(item => (
+            <tr key={item}>
+              <td>{item}</td>
+              <td>{item.length}</td>
+            </tr>
+          ))
+        }
+      </Component>
+    </tbody>
+  </table>
+);
 
 class Demo extends Component {
   render() {
+    const resultView = (
+      <Fragment>
+        <EnhancedFreeTextFilter />
+        <EnhancedLengthFilter />
+
+        <h2>Refined Result</h2>
+        <Facet component={Refine} items={items} />
+
+        <h2>Sorted Result</h2>
+        <Facet component={Sort} items={items} />
+
+        <h2>Filtered Result</h2>
+        <Facet component={Filter} items={items} />
+      </Fragment>
+    );
+
     return (
       <div>
-        <h1>react-filtered Demo</h1>
-        <FilterScope>
-          <h1>Filter Scope 1</h1>
-          <EnhancedFreeTextFilter />
-          <EnhancedLengthFilter />
-          <FilterResult items={items}>
-            {filteredItems => filteredItems.map(item => <div>{item}</div>)}
-          </FilterResult>
-        </FilterScope>
-        <FilterScope>
-          <h1>Filter Scope 2</h1>
-          <EnhancedFreeTextFilter />
-          <EnhancedLengthFilter />
-          <FilterResult items={items}>
-            {filteredItems => filteredItems.map(item => <div>{item}</div>)}
-          </FilterResult>
+        <h1>react-refine Demo</h1>
+        <h2>Refine Scope with single sort mode</h2>
+        <RefineScope sortMode={SORT_MODE_ONE}>{resultView}</RefineScope>
 
-          <FilterScope>
-            <h1>Filter Scope 3 inside of Filter Scope 2</h1>
-            <EnhancedFreeTextFilter />
-            <EnhancedLengthFilter />
-            <FilterResult items={items}>
-              {filteredItems => filteredItems.map(item => <div>{item}</div>)}
-            </FilterResult>
-          </FilterScope>
-        </FilterScope>
+        <hr />
+
+        <h2>Refine Scope with multi sort mode</h2>
+        <RefineScope sortMode={SORT_MODE_TIE}>{resultView}</RefineScope>
       </div>
     );
   }

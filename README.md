@@ -1,4 +1,4 @@
-# react-filtered
+# react-refine
 
 [![Travis][build-badge]][build]
 [![npm package][npm-badge]][npm]
@@ -6,35 +6,35 @@
 
 Composable components for flexible filtering.
 
-[build-badge]: https://img.shields.io/travis/flydiverny/react-filtered/master.png?style=flat-square
-[build]: https://travis-ci.org/flydiverny/react-filtered
+[build-badge]: https://img.shields.io/travis/flydiverny/react-refine/master.png?style=flat-square
+[build]: https://travis-ci.org/flydiverny/react-refine
 [npm-badge]: https://img.shields.io/npm/v/npm-package.png?style=flat-square
-[npm]: https://www.npmjs.org/package/react-filtered
-[coveralls-badge]: https://img.shields.io/coveralls/flydiverny/react-filtered/master.png?style=flat-square
-[coveralls]: https://coveralls.io/github/flydiverny/react-filtered
+[npm]: https://www.npmjs.org/package/react-refine
+[coveralls-badge]: https://img.shields.io/coveralls/flydiverny/react-refine/master.png?style=flat-square
+[coveralls]: https://coveralls.io/github/flydiverny/react-refine
 
 ### Installation
 
 ```
-yarn add react-filtered
+yarn add react-refine
 ```
 
 ## Usage
 
-### Consuming filtered results
+### Consuming refine results
 
 Grant access to specific trees by using the `Grant`.
 
 ```js
-import { FilterScope, FilterResult } from "react-filtered";
+import { RefineScope, Refine } from "react-refine";
 
-<FilterScope>
+<RefineScope>
   <FreeTextSearch />
 
-  <FilterResult items={["abc", "123", "def"]}>
-    {filteredItems => filteredItems.map(item => <div>{item}</div>)}
-  </FilterResult>
-</FilterScope>;
+  <Refine items={["abc", "123", "def"]}>
+    {items => items.map(item => <div>{item}</div>)}
+  </Refine>
+</RefineScope>;
 ```
 
 ## filterController HOC
@@ -44,18 +44,16 @@ To create components which provides filters in the scope you can use the `filter
 ### Example usage of filterController
 
 ```js
-import { filterController } from "react-filtered";
+import { filterController } from "react-refine";
 
 class FreeTextSearch extends Component {
   onChange = evt => {
-    const filter = evt.target.value;
+    const query = evt.target.value;
 
-    if (filter.length === 0) {
+    if (query.length === 0) {
       this.props.unsetFilter();
     } else {
-      this.props.setFilter(items =>
-        items.filter(item => item.includes(filter))
-      );
+      this.props.setFilter(items => items.filter(item => item.includes(query)));
     }
   };
 

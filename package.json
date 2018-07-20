@@ -1,6 +1,6 @@
 {
-  "name": "react-filtered",
-  "version": "0.0.1",
+  "name": "react-refine",
+  "version": "0.1.0",
   "description": "Composable filtering using react context",
   "main": "lib/index.js",
   "module": "es/index.js",
@@ -32,9 +32,9 @@
     "react-dom": "^16.4.1"
   },
   "author": "Markus Maga <markus@nadilus.com>",
-  "homepage": "https://github.com/Flydiverny/react-filtered",
+  "homepage": "https://github.com/Flydiverny/react-refine",
   "license": "MIT",
-  "repository": "https://github.com/Flydiverny/react-filtered.git",
+  "repository": "https://github.com/Flydiverny/react-refine.git",
   "keywords": [
     "react-component"
   ]
