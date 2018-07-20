@@ -9,24 +9,24 @@ const sortController = comparator => WrappedComponent => {
   // eslint-disable-next-line react/prop-types
   const SortController = ({ forwardedRef, ...props }) => (
     <RefineContext.Consumer>
-      {({ addSorter, removeSorter, sorters, toggleSorter }) => (
+      {({ removeSorter, getSorterDirection, toggleSorter }) => (
         <WrappedComponent
           ref={forwardedRef}
           setSortDirection={direction =>
-            addSorter(identifier, comparator, direction)
+            toggleSorter(identifier, comparator, direction)
           }
           unsetSorter={() => removeSorter(identifier)}
           toggleSortDirection={() => toggleSorter(identifier, comparator)}
-          sortMode={
-            (sorters.find(sorter => sorter.identifier === identifier) || {})
-              .direction || OFF
-          }
+          sortMode={getSorterDirection(identifier)}
         />
       )}
     </RefineContext.Consumer>
   );
 
   hoistNonReactStatics(SortController, WrappedComponent);
+
+  const name = WrappedComponent.displayName || WrappedComponent.name;
+  SortController.displayName = `sortController(${name})`;
 
   return SortController;
 };

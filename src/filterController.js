@@ -20,6 +20,9 @@ const filterController = WrappedComponent => {
 
   hoistNonReactStatics(FilterController, WrappedComponent);
 
+  const name = WrappedComponent.displayName || WrappedComponent.name;
+  FilterController.displayName = `filterController(${name})`;
+
   return FilterController;
 };
 
