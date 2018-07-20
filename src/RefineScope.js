@@ -1,16 +1,16 @@
-import React, { Component } from "react";
-import PropTypes from "prop-types";
-import RefineContext from "./RefineContext";
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import RefineContext from './RefineContext';
 
-export const SORT_MODE_ONE = "sort_one";
-export const SORT_MODE_TIE = "sort_tie";
+export const SORT_MODE_ONE = 'sort_one';
+export const SORT_MODE_TIE = 'sort_tie';
 
-export const ASC = "asc";
-export const DESC = "desc";
-export const OFF = "off";
+export const ASC = 'asc';
+export const DESC = 'desc';
+export const OFF = 'off';
 
-export const PRIORITY_LAST = "prio_last";
-export const PRIORITY_FIRST = "prio_first";
+export const PRIORITY_LAST = 'prio_last';
+export const PRIORITY_FIRST = 'prio_first';
 
 const useSorter = ({ comparator, direction } = {}, a, b) =>
   comparator ? comparator(a, b) * (direction === ASC ? 1 : -1) : 0;
@@ -18,21 +18,19 @@ const useSorter = ({ comparator, direction } = {}, a, b) =>
 class RefineScope extends Component {
   state = {
     filters: [],
-    sorters: []
+    sorters: [],
   };
 
   removeFunnel = (type, idToRemove) => {
     this.setState(state => ({
-      [type]: state[type].filter(({ identifier }) => identifier !== idToRemove)
+      [type]: state[type].filter(({ identifier }) => identifier !== idToRemove),
     }));
   };
 
   addFunnel = (type, identifier, funnel, overwrite = false) => {
     this.setState(state => {
       let nextList = null;
-      const oldList = (overwrite ? [] : state[type]).filter(
-        f => f.identifier !== identifier
-      );
+      const oldList = (overwrite ? [] : state[type]).filter(f => f.identifier !== identifier);
 
       const newFunnel = { identifier, ...funnel };
 
@@ -43,22 +41,19 @@ class RefineScope extends Component {
       }
 
       return {
-        [type]: nextList
+        [type]: nextList,
       };
     });
   };
 
-  addFilter = (identifier, filter) =>
-    this.addFunnel("filters", identifier, { filter });
+  addFilter = (identifier, filter) => this.addFunnel('filters', identifier, { filter });
 
-  removeFilter = identifier => this.removeFunnel("filters", identifier);
+  removeFilter = identifier => this.removeFunnel('filters', identifier);
 
-  removeSorter = identifier => this.removeFunnel("sorters", identifier);
+  removeSorter = identifier => this.removeFunnel('sorters', identifier);
 
   toggleSorter = (idToFind, comparatorIn, forceDirection) => {
-    const index = this.state.sorters.findIndex(
-      ({ identifier }) => identifier === idToFind
-    );
+    const index = this.state.sorters.findIndex(({ identifier }) => identifier === idToFind);
 
     if (index > -1) {
       this.setState(state => {
@@ -71,19 +66,19 @@ class RefineScope extends Component {
           funnels.splice(index, 1);
 
           return {
-            sorters: [newFunnel].concat(funnels)
+            sorters: [newFunnel].concat(funnels),
           };
         } else {
           funnels[index] = newFunnel;
 
           return {
-            sorters: funnels
+            sorters: funnels,
           };
         }
       });
     } else {
       this.addFunnel(
-        "sorters",
+        'sorters',
         idToFind,
         { comparator: comparatorIn, direction: forceDirection || ASC },
         this.props.sortMode === SORT_MODE_ONE
@@ -99,8 +94,7 @@ class RefineScope extends Component {
     }
 
     return filters.reduce(
-      (currentItems, { filter }) =>
-        filter ? filter(currentItems) : currentItems,
+      (currentItems, { filter }) => (filter ? filter(currentItems) : currentItems),
       items
     );
   };
@@ -130,8 +124,7 @@ class RefineScope extends Component {
   refine = items => this.sort(this.filter(items));
 
   getSorterDirection = identifier =>
-    (this.state.sorters.find(funnel => funnel.identifier === identifier) || {})
-      .direction || OFF;
+    (this.state.sorters.find(funnel => funnel.identifier === identifier) || {}).direction || OFF;
 
   render() {
     return (
@@ -144,7 +137,7 @@ class RefineScope extends Component {
           removeFilter: this.removeFilter,
           removeSorter: this.removeSorter,
           getSorterDirection: this.getSorterDirection,
-          toggleSorter: this.toggleSorter
+          toggleSorter: this.toggleSorter,
         }}
       >
         {this.props.children}
@@ -155,13 +148,13 @@ class RefineScope extends Component {
 
 RefineScope.defaultProps = {
   sortMode: SORT_MODE_TIE,
-  sortPriority: PRIORITY_LAST
+  sortPriority: PRIORITY_LAST,
 };
 
 RefineScope.propTypes = {
   children: PropTypes.node.isRequired,
   sortMode: PropTypes.oneOf([SORT_MODE_ONE, SORT_MODE_TIE]),
-  sortPriority: PropTypes.oneOf([PRIORITY_LAST, PRIORITY_FIRST])
+  sortPriority: PropTypes.oneOf([PRIORITY_LAST, PRIORITY_FIRST]),
 };
 
 export default RefineScope;

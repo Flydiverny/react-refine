@@ -1,10 +1,10 @@
-import React from "react";
-import hoistNonReactStatics from "hoist-non-react-statics";
-import RefineContext from "./RefineContext";
-import identityGen from "./identityGen";
+import React from 'react';
+import hoistNonReactStatics from 'hoist-non-react-statics';
+import RefineContext from './RefineContext';
+import identityGen from './identityGen';
 
 const filterController = WrappedComponent => {
-  const uuid = identityGen("filter");
+  const uuid = identityGen('filter');
 
   const FilterController = props => (
     <RefineContext.Consumer>

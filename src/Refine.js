@@ -1,10 +1,10 @@
-import React from "react";
-import PropTypes from "prop-types";
-import RefineContext from "./RefineContext";
+import React from 'react';
+import PropTypes from 'prop-types';
+import RefineContext from './RefineContext';
 
 const consumerPropTypes = {
   items: PropTypes.array.isRequired,
-  children: PropTypes.func.isRequired
+  children: PropTypes.func.isRequired,
 };
 
 const funnel = op => ({ items, children }) => (
@@ -13,16 +13,16 @@ const funnel = op => ({ items, children }) => (
   </RefineContext.Consumer>
 );
 
-const Refine = funnel("refine");
+const Refine = funnel('refine');
 Refine.propTypes = consumerPropTypes;
-Refine.displayName = "Refine";
+Refine.displayName = 'Refine';
 
-const Filter = funnel("filter");
+const Filter = funnel('filter');
 Filter.propTypes = consumerPropTypes;
-Filter.displayName = "Filter";
+Filter.displayName = 'Filter';
 
-const Sort = funnel("sort");
+const Sort = funnel('sort');
 Sort.propTypes = consumerPropTypes;
-Sort.displayName = "Sort";
+Sort.displayName = 'Sort';
 
 export { Refine, Filter, Sort };

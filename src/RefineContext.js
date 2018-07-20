@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 
 const RefineContext = React.createContext({
   filter: items => items,
@@ -12,7 +12,7 @@ const RefineContext = React.createContext({
   removeSorter: () => {},
 
   sorters: {},
-  toggleSorter: () => {}
+  toggleSorter: () => {},
 });
 
 export default RefineContext;
