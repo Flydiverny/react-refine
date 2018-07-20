@@ -11,6 +11,7 @@ import {
   SORT_MODE_ONE,
   SORT_MODE_TIE
 } from "../../src";
+import { PRIORITY_FIRST } from "../../src/RefineScope";
 
 const items = ["Hello World", "12345", "Hello W0r1d", "66666", "55555"];
 
@@ -20,16 +21,20 @@ const freeTextFilter = filter => items =>
 const lengthFilter = filter => items =>
   items.filter(item => item.length <= filter);
 
-const onChange = filter => evt => {
+const onChange = (filter, setFilter, unsetFilter) => evt => {
   if (evt.target.value.length === 0) {
-    this.props.unsetFilter();
+    unsetFilter();
   } else {
-    this.props.setFilter(filter(evt.target.value));
+    setFilter(filter(evt.target.value));
   }
 };
 
-const FreeTextFilter = () => <input onChange={onChange(freeTextFilter)} />;
-const LengthFilter = () => <input onChange={onChange(lengthFilter)} />;
+const FreeTextFilter = ({ setFilter, unsetFilter }) => (
+  <input onChange={onChange(freeTextFilter, setFilter, unsetFilter)} />
+);
+const LengthFilter = ({ setFilter, unsetFilter }) => (
+  <input onChange={onChange(lengthFilter, setFilter, unsetFilter)} />
+);
 
 const Sorter = ({ toggleSortDirection, unsetSorter, sortMode }) => (
   <Fragment>
@@ -102,7 +107,9 @@ class Demo extends Component {
         <hr />
 
         <h2>Refine Scope with multi sort mode</h2>
-        <RefineScope sortMode={SORT_MODE_TIE}>{resultView}</RefineScope>
+        <RefineScope sortMode={SORT_MODE_TIE} sortPriority={PRIORITY_FIRST}>
+          {resultView}
+        </RefineScope>
       </div>
     );
   }

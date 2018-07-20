@@ -16,15 +16,10 @@ const sortController = comparator => WrappedComponent => {
             addSorter(identifier, comparator, direction)
           }
           unsetSorter={() => removeSorter(identifier)}
-          toggleSortDirection={() => {
-            if (!sorters[identifier]) {
-              addSorter(identifier, comparator);
-            } else {
-              toggleSorter(identifier);
-            }
-          }}
+          toggleSortDirection={() => toggleSorter(identifier, comparator)}
           sortMode={
-            (sorters[identifier] && sorters[identifier].direction) || OFF
+            (sorters.find(sorter => sorter.identifier === identifier) || {})
+              .direction || OFF
           }
         />
       )}
