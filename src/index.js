@@ -5,6 +5,8 @@ export {
   ASC,
   DESC,
   OFF,
+  PRIORITY_FIRST,
+  PRIORITY_LAST,
 } from './RefineScope';
 
 export { Refine, Filter, Sort } from './Refine';
