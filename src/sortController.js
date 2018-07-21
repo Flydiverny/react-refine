@@ -11,10 +11,9 @@ const sortController = comparator => WrappedComponent => {
       {({ removeSorter, getSorterDirection, toggleSorter }) => (
         <WrappedComponent
           {...props}
-          setSortDirection={direction => toggleSorter(identifier, comparator, direction)}
           removeSorter={() => removeSorter(identifier)}
-          toggleSorter={() => toggleSorter(identifier, comparator)}
-          sortMode={getSorterDirection(identifier)}
+          toggleSorter={forcedDirection => toggleSorter(identifier, comparator, forcedDirection)}
+          sortDirection={getSorterDirection(identifier)}
         />
       )}
     </RefineContext.Consumer>
