@@ -24,6 +24,7 @@ const sortController = comparator => WrappedComponent => {
 
   const name = WrappedComponent.displayName || WrappedComponent.name;
   SortController.displayName = `sortController(${name})`;
+  SortController.WrappedComponent = WrappedComponent;
 
   return SortController;
 };

@@ -22,6 +22,7 @@ const filterController = WrappedComponent => {
 
   const name = WrappedComponent.displayName || WrappedComponent.name;
   FilterController.displayName = `filterController(${name})`;
+  FilterController.WrappedComponent = WrappedComponent;
 
   return FilterController;
 };
