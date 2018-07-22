@@ -11,5 +11,5 @@ export {
 
 export { Refine, Filter, Sort } from './Refine';
 
-export { default as filterController } from './filterController';
-export { default as sortController } from './sortController';
+export { default as withFilter } from './withFilter';
+export { default as withSorter } from './withSorter';

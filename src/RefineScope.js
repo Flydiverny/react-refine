@@ -123,7 +123,7 @@ class RefineScope extends Component {
 
   refine = items => this.sort(this.filter(items));
 
-  getSorterDirection = identifier =>
+  getSortDirection = identifier =>
     (this.state.sorters.find(funnel => funnel.identifier === identifier) || {}).direction || OFF;
 
   render() {
@@ -136,7 +136,7 @@ class RefineScope extends Component {
           addFilter: this.addFilter,
           removeFilter: this.removeFilter,
           removeSorter: this.removeSorter,
-          getSorterDirection: this.getSorterDirection,
+          getSortDirection: this.getSortDirection,
           toggleSorter: this.toggleSorter,
         }}
       >

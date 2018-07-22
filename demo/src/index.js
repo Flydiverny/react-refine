@@ -6,8 +6,8 @@ import {
   Refine,
   Sort,
   Filter,
-  filterController,
-  sortController,
+  withFilter,
+  withSorter,
   SORT_MODE_ONE,
   SORT_MODE_TIE,
   PRIORITY_FIRST,
@@ -27,9 +27,10 @@ const onChange = (filter, setFilter, clearFilter) => evt => {
   }
 };
 
-const FreeTextFilter = ({ setFilter, clearFilter }) => (
-  <input onChange={onChange(freeTextFilter, setFilter, clearFilter)} />
+const FreeTextFilter = ({ text, setFilter, clearFilter }) => (
+  <input onChange={onChange(freeTextFilter, setFilter, clearFilter)} placeholder={text} />
 );
+
 const LengthFilter = ({ setFilter, clearFilter }) => (
   <input onChange={onChange(lengthFilter, setFilter, clearFilter)} />
 );
@@ -37,15 +38,15 @@ const LengthFilter = ({ setFilter, clearFilter }) => (
 const Sorter = ({ toggleSorter, removeSorter, sortDirection }) => (
   <Fragment>
     {sortDirection}
-    <button onClick={toggleSorter}>Toggle</button>
-    <button onClick={removeSorter}>Off</button>
+    <button onClick={() => toggleSorter()}>Toggle</button>
+    <button onClick={() => removeSorter()}>Off</button>
   </Fragment>
 );
 
-const EnhancedFreeTextFilter = filterController(FreeTextFilter);
-const EnhancedLengthFilter = filterController(LengthFilter);
-const LengthSorter = sortController((a, b) => a.length - b.length)(Sorter);
-const AlphabeticSorter = sortController((a, b) => (a < b ? -1 : a > b ? 1 : 0))(Sorter);
+const EnhancedFreeTextFilter = withFilter(FreeTextFilter);
+const EnhancedLengthFilter = withFilter(LengthFilter);
+const LengthSorter = withSorter((a, b) => a.length - b.length)(Sorter);
+const AlphabeticSorter = withSorter((a, b) => (a < b ? -1 : a > b ? 1 : 0))(Sorter);
 
 const Facet = ({ component: Component, ...props }) => (
   <table>
@@ -53,6 +54,7 @@ const Facet = ({ component: Component, ...props }) => (
       <tr>
         <th>
           Alpha:
+          <AlphabeticSorter />
           <AlphabeticSorter />
         </th>
         <th>
@@ -80,7 +82,8 @@ class Demo extends Component {
   render() {
     const resultView = (
       <Fragment>
-        <EnhancedFreeTextFilter />
+        <EnhancedFreeTextFilter text={'First'} />
+        <EnhancedFreeTextFilter text={'Second'} />
         <EnhancedLengthFilter />
 
         <h2>Refined Result</h2>
