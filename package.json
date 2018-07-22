@@ -20,7 +20,7 @@
     "prepublish": "yarn build"
   },
   "dependencies": {
-    "hoist-non-react-statics": "^3.0.0-rc.1"
+    "hoist-non-react-statics": "2.5.5"
   },
   "peerDependencies": {
     "prop-types": "15.x",
