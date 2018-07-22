@@ -1,6 +1,6 @@
 import React from 'react';
 import hoistNonReactStatics from 'hoist-non-react-statics';
-import RefineContext from '../RefineContext';
+import RefineContext from './RefineContext';
 
 const refineHoc = WrappedComponent => {
   const RefineHoC = props => (
