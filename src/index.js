@@ -14,3 +14,5 @@ export { Refine, Filter, Sort } from './Refine';
 
 export { default as withFilter } from './withFilter';
 export { default as withSorter } from './withSorter';
+
+export { default as SortControl } from './SortControl';

@@ -11,6 +11,7 @@ import {
   SORT_MODE_ONE,
   SORT_MODE_TIE,
   PRIORITY_FIRST,
+  SortControl,
 } from '../../src';
 
 const items = ['Hello World', '12345', 'Hello W0r1d', '66666', '55555'];
@@ -35,31 +36,33 @@ const LengthFilter = ({ setFilter, clearFilter }) => (
   <input onChange={onChange(lengthFilter, setFilter, clearFilter)} />
 );
 
-const Sorter = ({ toggleSorter, removeSorter, sortDirection }) => (
-  <Fragment>
-    {sortDirection}
-    <button onClick={() => toggleSorter()}>Toggle</button>
-    <button onClick={() => removeSorter()}>Off</button>
-  </Fragment>
+const Sorter = ({ text, sorter }) => (
+  <SortControl comparator={sorter}>
+    {({ toggleSorter, removeSorter, sortDirection }) => (
+      <Fragment>
+        {text}: {sortDirection}
+        <button onClick={() => toggleSorter()}>Toggle</button>
+        <button onClick={() => removeSorter()}>Off</button>
+      </Fragment>
+    )}
+  </SortControl>
 );
 
 const EnhancedFreeTextFilter = withFilter(FreeTextFilter);
 const EnhancedLengthFilter = withFilter(LengthFilter);
-const LengthSorter = withSorter((a, b) => a.length - b.length)(Sorter);
-const AlphabeticSorter = withSorter((a, b) => (a < b ? -1 : a > b ? 1 : 0))(Sorter);
+
+const alphaSort = (a, b) => (a < b ? -1 : a > b ? 1 : 0);
+const lengthSort = (a, b) => a.length - b.length;
 
 const Facet = ({ component: Component, ...props }) => (
   <table>
     <thead>
       <tr>
         <th>
-          Alpha:
-          <AlphabeticSorter />
-          <AlphabeticSorter />
+          <Sorter text={'Alpha'} sorter={alphaSort} />
         </th>
         <th>
-          Length:
-          <LengthSorter />
+          <Sorter text={'Length'} sorter={lengthSort} />
         </th>
       </tr>
     </thead>
