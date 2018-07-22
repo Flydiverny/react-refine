@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import RefineContext from './RefineContext';
+import RefineContext from './internals/RefineContext';
 
 const facet = op => ({ items, children }) => (
   <RefineContext.Consumer>

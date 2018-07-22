@@ -1,5 +1,6 @@
+export { default as RefineScope } from './RefineScope';
+
 export {
-  default as RefineScope,
   SORT_MODE_ONE,
   SORT_MODE_TIE,
   ASC,
@@ -7,7 +8,7 @@ export {
   OFF,
   PRIORITY_FIRST,
   PRIORITY_LAST,
-} from './RefineScope';
+} from './constants';
 
 export { Refine, Filter, Sort } from './Refine';
 

@@ -1,16 +1,15 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import RefineContext from './RefineContext';
-
-export const SORT_MODE_ONE = 'sort_one';
-export const SORT_MODE_TIE = 'sort_tie';
-
-export const ASC = 'asc';
-export const DESC = 'desc';
-export const OFF = 'off';
-
-export const PRIORITY_LAST = 'prio_last';
-export const PRIORITY_FIRST = 'prio_first';
+import RefineContext from './internals/RefineContext';
+import {
+  SORT_MODE_ONE,
+  SORT_MODE_TIE,
+  ASC,
+  DESC,
+  OFF,
+  PRIORITY_FIRST,
+  PRIORITY_LAST,
+} from './constants';
 
 const useSorter = ({ comparator, direction } = {}, a, b) =>
   comparator ? comparator(a, b) * (direction === ASC ? 1 : -1) : 0;
