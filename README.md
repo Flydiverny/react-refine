@@ -8,7 +8,7 @@ Composable components for flexible filtering and sorting!
 
 [build-badge]: https://img.shields.io/travis/flydiverny/react-refine/master.png?style=flat-square
 [build]: https://travis-ci.org/flydiverny/react-refine
-[npm-badge]: https://img.shields.io/npm/v/npm-package.png?style=flat-square
+[npm-badge]: https://img.shields.io/npm/v/react-refine.png?style=flat-square
 [npm]: https://www.npmjs.org/package/react-refine
 [coveralls-badge]: https://img.shields.io/coveralls/flydiverny/react-refine/master.png?style=flat-square
 [coveralls]: https://coveralls.io/github/flydiverny/react-refine
