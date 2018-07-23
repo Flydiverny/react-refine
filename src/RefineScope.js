@@ -34,9 +34,9 @@ class RefineScope extends Component {
       const newFunnel = { identifier, ...funnel };
 
       if (this.props.sortPriority === PRIORITY_LAST) {
-        nextList = [newFunnel].concat(oldList);
+        nextList = [newFunnel, ...oldList];
       } else {
-        nextList = oldList.concat([newFunnel]);
+        nextList = [...oldList, newFunnel];
       }
 
       return {
@@ -56,7 +56,7 @@ class RefineScope extends Component {
 
     if (index > -1) {
       this.setState(state => {
-        const funnels = state.sorters.concat();
+        const funnels = [...state.sorters];
         const { identifier, comparator, direction } = state.sorters[index];
         const newDirection = forceDirection || direction === ASC ? DESC : ASC;
         const newFunnel = { identifier, comparator, direction: newDirection };
@@ -65,7 +65,7 @@ class RefineScope extends Component {
           funnels.splice(index, 1);
 
           return {
-            sorters: [newFunnel].concat(funnels),
+            sorters: [newFunnel, ...funnels],
           };
         } else {
           funnels[index] = newFunnel;
@@ -105,7 +105,7 @@ class RefineScope extends Component {
       return itemsIn;
     }
 
-    return itemsIn.concat().sort((a, b) => {
+    return [...itemsIn].sort((a, b) => {
       let sortResult = 0;
 
       for (let funnel of sorters) {
