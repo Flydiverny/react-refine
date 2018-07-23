@@ -92,10 +92,7 @@ class RefineScope extends Component {
       return items;
     }
 
-    return filters.reduce(
-      (currentItems, { filter }) => (filter ? filter(currentItems) : currentItems),
-      items
-    );
+    return filters.reduce((currentItems, { filter }) => filter(currentItems), items);
   };
 
   sort = itemsIn => {
