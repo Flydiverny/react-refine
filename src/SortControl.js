@@ -4,13 +4,15 @@ import identityGen from './internals/identityGen';
 import refineHoc from './internals/refineHoc';
 
 class SortControl extends React.Component {
-  state = {
-    id: identityGen('sort'),
-  };
-
   constructor(props) {
     super(props);
-    this.toggleSorter();
+    this.state = {
+      id: identityGen('sort'),
+    };
+
+    if (props.initial) {
+      this.toggleSorter();
+    }
   }
 
   componentDidUpdate(prevProps) {
@@ -53,10 +55,13 @@ class SortControl extends React.Component {
 SortControl.propTypes = {
   children: PropTypes.func.isRequired,
   disabled: PropTypes.bool,
+  initial: PropTypes.bool,
+  sorter: PropTypes.func.isRequired,
 };
 
 SortControl.defaultProps = {
   disabled: false,
+  initial: false,
 };
 
 export default refineHoc(SortControl);
