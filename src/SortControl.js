@@ -33,7 +33,7 @@ class SortControl extends React.Component {
     if (this.props.disabled) {
       this.removeSorter();
     } else {
-      this.props.refine.toggleSorter(this.state.id, this.props.sorter, forcedDirection);
+      this.props.refine.toggleSorter(this.state.id, this.props.comparator, forcedDirection);
     }
   };
 
@@ -56,7 +56,7 @@ SortControl.propTypes = {
   children: PropTypes.func.isRequired,
   disabled: PropTypes.bool,
   initial: PropTypes.bool,
-  sorter: PropTypes.func.isRequired,
+  comparator: PropTypes.func.isRequired,
 };
 
 SortControl.defaultProps = {
