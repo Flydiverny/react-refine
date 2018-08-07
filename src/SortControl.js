@@ -18,15 +18,13 @@ class SortControl extends React.Component {
   componentDidUpdate(prevProps) {
     if (this.props.disabled) {
       this.removeSorter();
-    }
-
-    if (prevProps.comparator !== this.props.comparator) {
+    } else if (prevProps.comparator !== this.props.comparator) {
       this.toggleSorter(this.getSortDirection());
     }
   }
 
   componentWillUnmount() {
-    this.props.refine.removeSorter(this.state.id);
+    this.removeSorter();
   }
 
   toggleSorter = forcedDirection => {
